@@ -1,0 +1,15 @@
+edit file in main directory
+edit yet another line
+add a new line
+add another line
+add yet another line
+test the multicolor text
+
+every trick I've learned
+check the different colors
+
+modified file blue color
+
+add a line. Let's check how many times the code gets built
+
+edit this 
