@@ -38,14 +38,20 @@ printColoredEvent removed@(Removed{}) = do
     putStrLn $ eventPath removed
 printColoredEvent _ = return ()
 
-printReservantLn :: String -> IO ()
-printReservantLn x = do
+printLog :: String -> IO ()
+printLog x = do
     putChunk $ "[RESERVANT] " & fore yellow
     putStrLn x
 
 someFunc :: FilePath -> IO ()
 someFunc path = do
     withManager $ \mgr -> do
+        printLog "Building the program..."
+
+        callCommand "stack build"
+
+        printLog "Starting server... Done."
+
         threadId <- forkIO $ callCommand $ "stack runhaskell " ++ path
 
         threadIdIORef <- newIORef threadId
@@ -60,19 +66,17 @@ someFunc path = do
 
                     case event of
                         CloseWrite{} -> do
-                            printReservantLn "Stopping the server"
+                            printLog "Stopping the server"
 
                             currentThreadId <- readIORef threadIdIORef
 
                             killThread currentThreadId
 
-                            printReservantLn "Building the program..."
+                            printLog "Building the program..."
 
                             callCommand "stack build"
 
-                            printReservantLn "Building done"
-
-                            printReservantLn "Starting server..."
+                            printLog "Starting server... Done"
 
                             newThreadId <- forkIO $ callCommand "stack runhaskell app/Main.hs"
 
