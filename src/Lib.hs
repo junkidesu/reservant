@@ -48,8 +48,6 @@ someFunc path = do
     withManager $ \mgr -> do
         threadId <- forkIO $ callCommand $ "stack runhaskell " ++ path
 
-        print threadId
-
         threadIdIORef <- newIORef threadId
 
         _ <-
