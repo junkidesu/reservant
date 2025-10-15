@@ -7,7 +7,6 @@ module Lib (
 import Control.Concurrent
 import Control.Monad (forever)
 import Data.Function ((&))
-import Data.String (IsString)
 import qualified Data.Text as T
 import GHC.IORef
 import Rainbow
@@ -41,13 +40,13 @@ printColoredEvent _ = return ()
 
 printReservantLn :: String -> IO ()
 printReservantLn x = do
-    putChunk $ "[RESERVANT] " & fore brightGreen
+    putChunk $ "[RESERVANT] " & fore yellow
     putStrLn x
 
-someFunc :: IO ()
-someFunc = do
+someFunc :: FilePath -> IO ()
+someFunc path = do
     withManager $ \mgr -> do
-        threadId <- forkIO $ callCommand "stack runhaskell app/Main.hs"
+        threadId <- forkIO $ callCommand $ "stack runhaskell " ++ path
 
         print threadId
 
@@ -56,7 +55,7 @@ someFunc = do
         _ <-
             watchTree
                 mgr
-                "."
+                "./src"
                 predicate
                 ( \event -> do
                     printColoredEvent event
