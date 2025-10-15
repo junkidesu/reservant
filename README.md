@@ -1,4 +1,4 @@
-# reservant-exe
+# reservant
 
 Nodemon clone for your Haskell web applications. Use reservant to automatically re-build and restart your Haskell application as you make changes to your code.
 
@@ -36,15 +36,15 @@ $ stack install
 To ensure that the tool is installed, run
 
 ```sh
-$ reservant-exe --help
+$ reservant --help
 ```
 
 ## Usage
 
-In the root directory of your Haskell project, run `reservant-exe` executable, providing the relative path of the module that has the "main" method.
+In the root directory of your Haskell project, run `reservant` executable, providing the relative path of the module that has the "main" method.
 
 Example:
 
 ```sh
-$ reservant-exe app/Main.hs
+$ reservant app/Main.hs
 ```
