@@ -1,6 +1,6 @@
 # reservant-exe
 
-Nodemon clone for your Haskell executable applications. Use reservant to automatically re-build and restart your Haskell application as you make changes to your code.
+Nodemon clone for your Haskell web applications. Use reservant to automatically re-build and restart your Haskell application as you make changes to your code.
 
 ## Libraries Used
 
