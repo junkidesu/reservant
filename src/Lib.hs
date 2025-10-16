@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Lib (
-    someFunc,
+    startReservant,
 ) where
 
 import Control.Concurrent
@@ -10,6 +10,7 @@ import Data.Function ((&))
 import qualified Data.Text as T
 import GHC.IORef
 import Rainbow
+import System.Exit (ExitCode (ExitFailure, ExitSuccess))
 import System.FSNotify
 import System.Process
 
@@ -36,25 +37,49 @@ printColoredEvent removed@(Removed{}) = do
         "[REMOVED] " & fore red
     putChunk $ (chunk . T.pack . show . eventTime $ removed) <> " " & italic & fore grey
     putStrLn $ eventPath removed
+printColoredEvent written@(CloseWrite{}) = do
+    putChunk $
+        "[WRITTEN] " & fore yellow
+    putChunk $ (chunk . T.pack . show . eventTime $ written) <> " " & italic & fore grey
+    putStrLn $ eventPath written
 printColoredEvent _ = return ()
 
 printLog :: String -> IO ()
-printLog x = do
+printLog s = do
     putChunk $ "[RESERVANT] " & fore yellow
-    putStrLn x
+    putStrLn s
 
-someFunc :: FilePath -> IO ()
-someFunc path = do
+printError :: String -> IO ()
+printError s = do
+    putChunk $ "[ERROR] " & fore red
+    putStrLn s
+
+buildAndStart :: IORef (Maybe ThreadId) -> FilePath -> IO ()
+buildAndStart threadIdIORef path = do
+    printLog "Building the program..."
+
+    buildProcessHandle <- runCommand "stack build"
+
+    buildResult <- waitForProcess buildProcessHandle
+
+    case buildResult of
+        ExitFailure _ -> do
+            printError "Failed to build the project"
+        ExitSuccess -> do
+            printLog "Starting server... Done."
+
+            threadId <- forkIO $ callCommand $ "stack runhaskell " ++ path
+
+            writeIORef threadIdIORef (Just threadId)
+
+startReservant :: FilePath -> IO ()
+startReservant path = do
     withManager $ \mgr -> do
         printLog "Building the program..."
 
-        callCommand "stack build"
+        threadIdIORef <- newIORef (Nothing :: Maybe ThreadId)
 
-        printLog "Starting server... Done."
-
-        threadId <- forkIO $ callCommand $ "stack runhaskell " ++ path
-
-        threadIdIORef <- newIORef threadId
+        buildAndStart threadIdIORef path
 
         _ <-
             watchTree
@@ -65,24 +90,22 @@ someFunc path = do
                     printColoredEvent event
 
                     case event of
+                        -- build and restart the application if the file is written
                         CloseWrite{} -> do
-                            printLog "Stopping the server"
+                            mbCurrentThreadId <- readIORef threadIdIORef
 
-                            currentThreadId <- readIORef threadIdIORef
-
-                            killThread currentThreadId
+                            case mbCurrentThreadId of
+                                Nothing -> return ()
+                                Just currentThreadId -> do
+                                    printLog "Stopping the server"
+                                    killThread currentThreadId
 
                             printLog "Building the program..."
 
-                            callCommand "stack build"
+                            buildAndStart threadIdIORef path
 
-                            printLog "Starting server... Done"
-
-                            newThreadId <- forkIO $ callCommand "stack runhaskell app/Main.hs"
-
-                            writeIORef threadIdIORef newThreadId
-
-                            return ()
+                        -- ignore if the file is not written
                         _ -> return ()
                 )
-        forever $ threadDelay 1000000
+        forever $
+            threadDelay 1000000

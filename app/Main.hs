@@ -34,4 +34,4 @@ main = run =<< execParser opts
 run :: Options -> IO ()
 run opts =
         let (MainModulePath path) = mainModulePath opts
-         in someFunc path
+         in startReservant path
