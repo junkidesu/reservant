@@ -1,0 +1,25 @@
+name: Simple pipeline to compile and release reservant executable
+
+on:
+  push:
+    branches:
+      - build-and-release
+
+jobs:
+  compile-and-release:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, fedora-latest, windows-latest]
+
+    steps:
+        - uses: actions/checkout@v4
+
+        - uses: haskell-actions/setup@v2.8.2
+          with:
+            ghc-version: 9.6.4 
+        
+        - run: stack install --local-bin-path .
+
+        
