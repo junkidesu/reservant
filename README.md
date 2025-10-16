@@ -48,3 +48,7 @@ Example:
 ```sh
 $ reservant app/Main.hs
 ```
+
+### Usage Limitations 
+
+At this moment, the file watcher only keeps track of the `src` directory of the Haskell project.
