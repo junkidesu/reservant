@@ -75,8 +75,6 @@ buildAndStart threadIdIORef path = do
 startReservant :: FilePath -> IO ()
 startReservant path = do
     withManager $ \mgr -> do
-        printLog "Building the program..."
-
         threadIdIORef <- newIORef (Nothing :: Maybe ThreadId)
 
         buildAndStart threadIdIORef path
@@ -99,8 +97,6 @@ startReservant path = do
                                 Just currentThreadId -> do
                                     printLog "Stopping the server"
                                     killThread currentThreadId
-
-                            printLog "Building the program..."
 
                             buildAndStart threadIdIORef path
 
