@@ -3,7 +3,14 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: terminfo-0.4.1.7@sha256:bb79305626d8f71c67906be4cca1d158627e83df95ac619d20d8f2fa69961f79,1658
+    pantry-tree:
+      sha256: 1cee1b5b2a521c3d4accd751cba8113444b7b014700c477fa0d69333cfd54926
+      size: 870
+  original:
+    hackage: terminfo-0.4.1.7@sha256:bb79305626d8f71c67906be4cca1d158627e83df95ac619d20d8f2fa69961f79,1658
 snapshots:
 - completed:
     sha256: 2fdd7d3e54540062ef75ca0a73ca3a804c527dbf8a4cadafabf340e66ac4af40
