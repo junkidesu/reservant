@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, fedora-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -28,22 +28,13 @@ jobs:
           mkdir dist
           stack install --local-bin-path dist
 
-      - name: Rename executable (Ubuntu)
+      - name: Rename the executables
         run: |
-          mv dist/reservant dist/reservant-ubuntu
-        if: matrix.os == 'ubuntu-latest'
-        shell: bash
-
-      - name: Rename executable (Fedora)
-        run: |
-          mv dist/reservant dist/reservant-fedora
-        if: matrix.os == 'fedora-latest'
-        shell: bash
-
-      - name: Rename executable (MacOS)
-        run: |
-          mv dist/reservant dist/reservant-macos
-        if: matrix.os == 'macos-latest'
+          if [[ "$RUNNER_OS" == "Linux" ]]; then 
+            mv dist/reservant dist/reservant-ubuntu
+          elif [[ "$RUNNER_OS" == "MacOS" ]]; then 
+            mv dist/reservant dist/reservant-macos
+          fi
         shell: bash
 
       - name: Upload build artifacts
@@ -72,5 +63,4 @@ jobs:
           prerelease: false
           files: |
             reservant-ubuntu
-            reservant-fedora
             reservant-macos
