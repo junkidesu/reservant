@@ -25,12 +25,10 @@ jobs:
 
       - name: Add workaround on Windows
         run: |
-          if (%RUNNER_OS% == Windows) {
-            ghcup run pacman -- -S mingw-w64-x86_64-ncurses
-            $Env:C_INCLUDE_PATH = "C:\ghcup\msys64\mingw64\include"
-            $Env:LIBRARY_PATH = "C:\ghcup\msys64\mingw64\lib"
-            cabal build --extra-include-dirs="C:\ghcup\msys64\mingw64\include\ncursesw"
-          }
+          ghcup run pacman -- -S mingw-w64-x86_64-ncurses
+          $Env:C_INCLUDE_PATH = "C:\ghcup\msys64\mingw64\include"
+          $Env:LIBRARY_PATH = "C:\ghcup\msys64\mingw64\lib"
+          cabal build --extra-include-dirs="C:\ghcup\msys64\mingw64\include\ncursesw"
         if: runner.os == 'Windows'
         shell: powershell
 
