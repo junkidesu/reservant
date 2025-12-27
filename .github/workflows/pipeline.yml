@@ -32,16 +32,18 @@ jobs:
         run: |
           if [[ "$RUNNER_OS" == "Linux" ]]; then 
             mv dist/reservant dist/reservant-ubuntu
-          elif [[ "$RUNNER_OS" == "MacOS" ]]; then 
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then 
             mv dist/reservant dist/reservant-macos
           fi
         shell: bash
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
+        if: runner.os == 'Linux'
         with:
-          name: reservant-${{ runner.os }}
+          name: reservant-${{ matrix.os }}
           path: dist/*
+
   release:
     needs: build
     runs-on: ubuntu-22.04
@@ -63,5 +65,5 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            reservant-ubuntu
+            reservant-linux
             reservant-macos
