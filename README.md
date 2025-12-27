@@ -1,6 +1,10 @@
 # reservant
 
-Nodemon clone for your Haskell web applications. Use reservant to automatically re-build and restart your Haskell application as you make changes to your code.
+Reservant is a utility CLI tool for web development in Haskell. When your Haskell web application is started with reservant, reservant will keep track of the source code of your project, and restart the application once a change is detected.
+
+![Demonstration of Reservant](resources/demonstration.png)
+
+This project was inspired by [Nodemon](https://nodemon.io/) for [Node.js](https://nodejs.org/en).
 
 ## Libraries Used
 
@@ -49,6 +53,6 @@ Example:
 $ reservant app/Main.hs
 ```
 
-### Usage Limitations 
+### Usage Limitations
 
 At this moment, the file watcher only keeps track of the `src` directory of the Haskell project.
