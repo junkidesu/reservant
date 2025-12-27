@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, fedora-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -23,35 +23,32 @@ jobs:
           ghc-version: 9.6.4
           enable-stack: true
 
-      - name: Add workaround on Windows
-        run: |
-          ghcup run pacman -- -S mingw-w64-x86_64-ncurses
-          $Env:C_INCLUDE_PATH = "C:\ghcup\msys64\mingw64\include"
-          $Env:LIBRARY_PATH = "C:\ghcup\msys64\mingw64\lib"
-          cabal build --extra-include-dirs="C:\ghcup\msys64\mingw64\include\ncursesw"
-        if: runner.os == 'Windows'
-        shell: powershell
-
       - name: Build the executable
         run: |
           mkdir dist
           stack install --local-bin-path dist
 
-      - name: Rename executable
+      - name: Rename executable (Ubuntu)
         run: |
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            mv dist/reservant.exe dist/reservant-windows.exe
-          elif [[ "$RUNNER_OS" == "Linux" ]]; then
-            mv dist/reservant dist/reservant-linux
-          elif [[ "$RUNNER_OS" == "macOS" ]]; then
-            mv dist/reservant dist/reservant-macos
-          fi
+          mv dist/reservant dist/reservant-ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+
+      - name: Rename executable (Fedora)
+        run: |
+          mv dist/reservant dist/reservant-fedora
+        if: matrix.os == 'fedora-latest'
+        shell: bash
+
+      - name: Rename executable (MacOS)
+        run: |
+          mv dist/reservant dist/reservant-macos
+        if: matrix.os == 'macos-latest'
         shell: bash
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-${{ runner.os }}
           path: dist/*
   release:
     needs: build
@@ -74,6 +71,6 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            reservant-windows.exe
-            reservant-linux
+            reservant-ubuntu
+            reservant-fedora
             reservant-macos
