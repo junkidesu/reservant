@@ -1,4 +1,4 @@
-name: Build
+name: Build and release
 
 on:
   workflow_dispatch:
@@ -32,7 +32,7 @@ jobs:
             cabal build --extra-include-dirs="C:\ghcup\msys64\mingw64\include\ncursesw"
           fi
         if: runner.os == 'Windows'
-        shell: bash
+        shell: powershell
 
       - name: Build the executable
         run: |
