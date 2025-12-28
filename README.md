@@ -1,5 +1,7 @@
 # reservant
 
+[![Build and release](https://github.com/junkidesu/reservant/actions/workflows/pipeline.yml/badge.svg)](https://github.com/junkidesu/reservant/actions/workflows/pipeline.yml)
+
 Reservant is a utility CLI tool for web development in Haskell. When your Haskell web application is started with reservant, reservant will keep track of the source code of your project, and restart the application once a change is detected.
 
 ![Demonstration of Reservant](resources/demonstration.png)
