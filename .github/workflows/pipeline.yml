@@ -39,7 +39,7 @@ jobs:
 
       - name: Upload build artifacts (Ubuntu)
         uses: actions/upload-artifact@v4
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' && github.event_name == 'push'
         with:
           name: reservant-ubuntu
           path: dist/*
@@ -54,7 +54,6 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-22.04
-
     steps:
       - uses: actions/checkout@v4
 
@@ -70,7 +69,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.version }}
-          name: Release ${{ github.event.inputs.version }}
+          name: Reservant ${{ github.event.inputs.version }}
+          body_path: CHANGELOG.md
           draft: false
           prerelease: false
           files: |

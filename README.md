@@ -12,7 +12,19 @@ This project was inspired by [Nodemon](https://nodemon.io/) for [Node.js](https:
 - [rainbow](https://hackage.haskell.org/package/rainbow) (Colored console output)
 - [optparse-applicative](https://hackage.haskell.org/package/optparse-applicative) (CLI)
 
-## Getting Started
+## Installation
+
+### Ready Executables
+
+You can download the compiled executables from the [latest release page](https://github.com/junkidesu/reservant/releases/latest). At this moment, only the executables for Ubuntu and MacOS are available.
+
+Having downloaded the build file, make it executable on the local machine:
+
+```sh
+$ chmod u+x reservant-ubuntu
+```
+
+### Build Locally
 
 First and foremost, clone the repository on your local machine:
 
@@ -20,16 +32,12 @@ First and foremost, clone the repository on your local machine:
 $ git clone https://github.com/junkidesu/reservant
 ```
 
-### Prerequisites
-
 To build the tool locally, ensure that the following are installed:
 
 - [Stack](https://docs.haskellstack.org/en/stable/)
 - [Cabal](https://cabal.readthedocs.io/en/stable/)
 
 Stack and Cabal can be installed either independently or with the [GHCup](https://www.haskell.org/ghcup/) tool.
-
-### Installation
 
 At the root of the repository, run
 
