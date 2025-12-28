@@ -60,6 +60,8 @@ jobs:
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v5
+        with:
+          merge-multiple: true
 
       - name: Make the artifact executable
         run: chmod u+x reservant-* || true
