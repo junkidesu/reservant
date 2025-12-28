@@ -37,10 +37,18 @@ jobs:
           fi
         shell: bash
 
-      - name: Upload build artifacts
+      - name: Upload build artifacts (Ubuntu)
         uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
         with:
-          name: reservant-${{ matrix.os }}
+          name: reservant-ubuntu
+          path: dist/*
+
+      - name: Upload build artifacts (MacOS)
+        uses: actions/upload-artifact@v4
+        if: matrix.os == 'macos-latest'
+        with:
+          name: reservant-macos
           path: dist/*
 
   release:
@@ -54,7 +62,7 @@ jobs:
         uses: actions/download-artifact@v5
 
       - name: Make the artifact executable
-        run: chmod u+x dist/reservant-* || true
+        run: chmod u+x reservant-* || true
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
@@ -64,5 +72,5 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            reservant-linux
+            reservant-ubuntu
             reservant-macos
