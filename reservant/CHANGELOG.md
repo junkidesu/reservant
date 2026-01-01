@@ -9,8 +9,14 @@ and this project adheres to the
 ## Unreleased
 
 ### Added
-- v0.1.0.1 Support for Windows
-- v0.1.0.1 Specifying files to ignore (something like .reservantignore)
+- v0.1.0.2 Support for Windows
+- v0.1.0.2 Specifying files to ignore (something like .reservantignore)
+
+
+## 0.1.0.1 - 2026-01-02
+
+### Added 
+- A minimal working example application with Servant and SQLite, as well as ready-made HTTP requests.
 
 ## 0.1.0.0 - 2025-12-28
 

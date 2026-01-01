@@ -44,7 +44,7 @@ Stack and Cabal can be installed either independently or with the [GHCup](https:
 At the root of the repository, run
 
 ```sh
-$ stack install
+$ stack install reservant
 ```
 
 To ensure that the tool is installed, run
@@ -62,6 +62,18 @@ Example:
 ```sh
 $ reservant app/Main.hs
 ```
+
+### Example
+
+To help with local tests of reservant, there is an example minimal Web application. To build and start the example application, perform the following steps:
+
+```sh
+$ stack build reservant-example 
+$ cd reservant-example
+$ reservant app/Main.hs
+```
+
+You may find more details here [here](reservant-example/).
 
 ### Usage Limitations
 

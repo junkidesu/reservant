@@ -1,0 +1,64 @@
+name: reservant-example
+version: 0.1.0.0
+github: "junkidesu/reservant-example"
+license: BSD-3-Clause
+author: "Anvar Sheryatullaev"
+maintainer: "alvaro.sh03@gmail.com"
+copyright: "2026 Anvar Sheryatullaev"
+
+extra-source-files:
+  - README.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description: Please see the README on GitHub at <https://github.com/junkidesu/reservant-example#readme>
+
+dependencies:
+  - base >= 4.7 && < 5
+  - text
+  - aeson
+  - warp
+  - servant
+  - servant-server
+  - sqlite-simple
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Widentities
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wmissing-export-lists
+  - -Wmissing-home-modules
+  - -Wpartial-fields
+  - -Wredundant-constraints
+
+library:
+  source-dirs: src
+
+executables:
+  reservant-example-exe:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - reservant-example
+
+tests:
+  reservant-example-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - reservant-example

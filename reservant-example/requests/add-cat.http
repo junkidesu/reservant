@@ -1,0 +1,8 @@
+POST http://localhost:8081/cats
+Content-Type: application/json
+
+{
+    "name": "Maru",
+    "age": 18,
+    "breed": "Scottish Straight"
+}

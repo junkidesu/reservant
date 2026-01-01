@@ -9,14 +9,12 @@ version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/junkidesu/reservant#readme>
 homepage:       https://github.com/junkidesu/reservant#readme
 bug-reports:    https://github.com/junkidesu/reservant/issues
-author:         Anvar Sheryatullayev
+author:         Anvar Sheryatullaev
 maintainer:     alvaro.sh03@gmail.com
-copyright:      2025 Anvar Sheryatullayev
+copyright:      2025 Anvar Sheryatullaev
 license:        BSD-3-Clause
-license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
-    README.md
     CHANGELOG.md
 
 source-repository head
