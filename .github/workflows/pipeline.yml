@@ -26,7 +26,7 @@ jobs:
       - name: Build the executable
         run: |
           mkdir dist
-          stack install --local-bin-path dist
+          stack install reservant --local-bin-path dist
 
       - name: Rename the executables
         run: |
@@ -70,7 +70,7 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.version }}
           name: Reservant ${{ github.event.inputs.version }}
-          body_path: CHANGELOG.md
+          body_path: reservant/CHANGELOG.md
           draft: false
           prerelease: false
           files: |
